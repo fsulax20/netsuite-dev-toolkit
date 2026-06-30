@@ -10,109 +10,93 @@
 
 - TD account provisioned and accessible at `https://[accountID].app.netsuite.com`
 - Administrator login credentials available
-- VPN **disconnected** before starting any SDA work
-- VS Code open with SuiteCloud extension installed
+- Codex Desktop installed with shell access
+- Git and the SuiteCloud CLI installed and available in the Codex shell
+- A GitHub repository selected or created using the decision criteria below
 
 ---
 
-## STEP 0 — VS CODE: CREATE SUITECLOUD PROJECT
+## STEP 0 — CHOOSE THE REPOSITORY
 
-Each engagement gets its own SuiteCloud project, separate from this toolkit repo.
+Ask: **Would I copy this customization into a different TD account later?**
 
-1. `Cmd+Shift+P` → `SuiteCloud: Create Project`
-2. Name it `[customer]scripts`
-3. Save it outside this toolkit repo, e.g. `~/[Customer Name]/[customer]scripts`
-4. Open this toolkit repo as a second folder in the same VS Code workspace (`File → Add Folder to Workspace`)
-5. Save the combined workspace as `[customer].code-workspace` for one-click reopening later
+- **Yes:** create a standalone repository. This is the right boundary for a portable SuiteApp, integration, or proof of concept that may be deployed to another TD account.
+- **No:** add the work to the existing repository that owns the account- or customer-specific solution.
 
----
-
-## STEP 1 — VS CODE: ADD AUTH ID
-
-1. `Cmd+Shift+P` → `SuiteCloud: Manage Accounts`
-2. Select **"New authentication ID"**
-3. Name it `[accountID]-admin` (e.g. `td3071658-admin`)
-4. Complete the browser OAuth flow — select **Administrator** role on the correct account
-5. Confirm the auth ID appears in the accounts list
+Avoid a standalone repo for a one-off script that cannot operate independently of its current project.
 
 ---
 
-## STEP 2 — VS CODE: CONFIGURE SUITECLOUD DEVELOPER ASSISTANT (if using Cline)
+## STEP 1 — CLONE LOCALLY AND OPEN IN CODEX
 
-1. `Cmd+,` → search `suitecloud.developerAssistant`
-2. Select the **Workspace** tab (not User — Workspace overrides User)
-3. Set **Auth ID** to `[accountID]-admin`
-4. Set **Local Port** to `8182` (or next available if in use)
-5. Check **Enable**
-6. Check Output panel → SuiteCloud filter — confirm service starts
+1. Clone the selected GitHub repository to a local folder.
+2. Open that folder as a Codex Project.
+3. Confirm the current branch and remote before editing.
+4. Copy `templates/AGENTS.md` into the repository root and fill in the project details.
 
----
-
-## STEP 3 — VS CODE: GET SDA API KEY (if using Cline)
-
-Run in VS Code terminal:
-```
-curl http://127.0.0.1:8182/api/internal/devassist/apikey
-```
-
-A popup appears with the generated key. Click **Copy API Key**, then in Cline settings:
-- **API Provider** → `OpenAI Compatible`
-- **Base URL** → `http://127.0.0.1:8182/api/internal/devassist`
-- **OpenAI Compatible API Key** → paste the copied key
-- **Model ID** → `devassist`
-
-Test with: `Create a simple SuiteScript 2.1 RESTlet that returns hello world`
+A Codex Project is linked to the local folder, not directly to GitHub. Treat the folder as a disposable clone: GitHub is the durable copy, so commit and push every verified unit of work. Never leave important work only in the local folder.
 
 ---
 
-## STEP 4 — CODEX: PERSONALIZATION (one-time per machine, not per account)
+## STEP 2 — CREATE OR CONFIRM THE SUITECLOUD PROJECT
 
-This only needs to be done once on this machine — it persists across all future projects.
+From the Codex Desktop shell:
 
-1. Codex Settings → **Personalization** → **Custom instructions**
-2. Paste the contents of this repo's `README.md`, from "WHO YOU ARE" to the end
-3. Click **Save**
+1. Confirm `manifest.xml` and `deploy.xml` exist at the SuiteCloud project root.
+2. If this is a new project, create it with the SuiteCloud CLI and use the standard SDF structure.
+3. Confirm the CLI can identify the project before adding scripts or objects.
 
-If already done, skip this step.
+Keep the SuiteCloud project at the repository root unless the repository intentionally contains multiple independently deployable packages.
 
 ---
 
-## STEP 5 — CLAUDE.AI: CONNECT MCP CONNECTOR
+## STEP 3 — CONFIGURE SUITECLOUD CLI AUTHENTICATION
 
-1. Claude.ai → Settings → Connectors
-2. Find or add the NetSuite MCP connector for the new TD account
-3. Note the connector name (e.g. `dcillo_td3071658`)
-4. Test with a simple SuiteQL query via `ns_runCustomSuiteQL`
+1. Start SuiteCloud CLI account setup from the Codex shell.
+2. Name the auth ID `[accountID]-admin` (for example, `td3071658-admin`).
+3. Complete the browser OAuth flow and select the **Administrator** role on the correct TD account.
+4. Confirm the CLI recognizes the auth ID.
+5. Keep authentication data local; do not commit it.
+
+---
+
+## STEP 4 — CONNECT AND VERIFY THE MCP CONNECTOR
+
+1. Confirm the NetSuite MCP connector for the TD account is available in Codex.
+2. Record its exact name in `docs/TD-ACCOUNTS.md` and the project's `AGENTS.md`.
+3. Test it with a small read-only SuiteQL query.
+4. Confirm the account returned by the query matches the intended TD account before any write or deployment.
+
+---
+
+## STEP 5 — BUILD, DEPLOY, AND VERIFY
+
+1. Build in Codex Desktop and use its shell for SuiteCloud CLI validation and deployment.
+2. Deploy only from the SuiteCloud project root.
+3. Verify the actual script and deployment IDs with SuiteQL; never trust the manifest alone.
+4. Verify event types, file paths, logs, and writeback behavior in the target TD account.
+5. Commit and push the verified change immediately.
 
 ---
 
 ## STEP 6 — UPDATE TOOLKIT DOCS
 
-Update `docs/TD-ACCOUNTS.md` with the new account entry — MCP connector, auth ID, SuiteCloud project path, status.
+Update `docs/TD-ACCOUNTS.md` with the account ID, MCP connector, SuiteCloud CLI auth ID, repository/folder, purpose, and status.
 
 ---
 
-## STEP 7 — COPY AGENTS.MD
+## HISTORICAL NOTE — VS CODE, CLINE, AND SDA
 
-Copy `templates/AGENTS.md` into the new SuiteCloud project root (`[customer]scripts/AGENTS.md`) and fill in:
-- Customer name
-- TD account ID
-- MCP connector name
-- SuiteCloud project path
-
----
+Older projects used the VS Code SuiteCloud extension, Cline, and SuiteCloud Developer Assistant. Those tools are no longer the primary workflow and are not required for new projects. Legacy SDA environments may still require VPN disconnection, workspace-scoped settings, a local port, and a regenerated API key; preserve those details only when maintaining an existing legacy workspace.
 
 ## GOTCHAS
 
 | Issue | Fix |
 |-------|-----|
-| VPN on during SDA setup | Disconnect VPN — connection reset errors will block OAuth |
 | Wrong role in OAuth flow | Click "Choose another role" — select Administrator |
-| Port 8181 conflict | Change SDA port to 8182 or next available in Workspace settings |
-| API key invalid after restart | Re-run curl command to get new key, paste into Cline |
-| SDA settings not sticking | Must be set in **Workspace** tab, not User tab |
-| SuiteCloud commands not appearing | Must be in a SuiteCloud project folder with manifest.xml — not this toolkit repo |
-| Adding toolkit repo breaks SDA | Save as a combined `.code-workspace` file rather than ad-hoc "Add Folder to Workspace" |
+| Codex Project appears disconnected from GitHub | Expected: it points to a local folder. Check the Git remote and push explicitly. |
+| Work exists only in the local folder | Commit and push it; the local clone is disposable. |
+| SuiteCloud CLI cannot find the project | Run it from the folder containing `manifest.xml`. |
 | Shared STDDEMO account | SDF custom field deploy silently ignored — use dedicated TD accounts for dev work |
 
 See `docs/GOTCHAS.md` for the full platform behavior log.

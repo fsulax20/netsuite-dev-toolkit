@@ -10,11 +10,11 @@
 
 ```
 ### [Account ID]
-- **MCP Connector:** [connector name in Claude]
-- **Auth ID (VS Code):** [accountID]-admin
+- **MCP Connector:** [connector name in Codex]
+- **SuiteCloud CLI Auth ID:** [accountID]-admin
 - **Type:** Dedicated | Shared STDDEMO
 - **Primary Use:** [what this account is for]
-- **SuiteCloud Project:** [repo/folder name, separate from this toolkit]
+- **SuiteCloud Project:** [GitHub repo and local clone folder]
 - **Key Customizations:** [custom fields, scripts, records deployed]
 - **Restrictions:** [any known limitations]
 - **Status:** Active | Dormant | Retired
@@ -29,10 +29,10 @@
 
 ### TD3071658
 - **MCP Connector:** dcillo_td3071658
-- **Auth ID (VS Code):** td3071658-admin
+- **SuiteCloud CLI Auth ID:** td3071658-admin
 - **Type:** Dedicated
 - **Primary Use:** Arista Networks CRM demo build
-- **SuiteCloud Project:** `crmscripts` (local, not yet in GitHub)
+- **SuiteCloud Project:** `crmscripts`
 - **Key Customizations:**
   - `custentity_llm_score` — AI lead score (Float) on Customer/Lead
   - Custom Sales Roles: Solution Engineer, Channel Manager
@@ -41,13 +41,26 @@
   - Deployed scripts: lead_scoring_restlet, lead_score_display, quote_margin_userevent, quote_dealdesk_ue, provisioning_restlet
 - **Restrictions:** None known — full dedicated account
 - **Status:** Active
-- **Notes:** OAuth 2.0 confirmed working. SDA tested and functional (VPN off required).
+- **Notes:** OAuth 2.0 confirmed working. Legacy SDA setup was previously tested; it is not the active workflow.
+
+---
+
+### TD3092021
+- **MCP Connector:** netsuite_stwy_manf-_26-1
+- **SuiteCloud CLI Auth ID:** Not yet documented
+- **Type:** Dedicated
+- **Primary Use:** Lead ingestion queue build
+- **SuiteCloud Project:** `lead-ingestion-queue`
+- **Key Customizations:** Lead ingestion queue project
+- **Restrictions:** None known
+- **Status:** Active
+- **Notes:** Primary build surface is Codex Desktop with shell access and the SuiteCloud CLI.
 
 ---
 
 ### TD3074265
 - **MCP Connector:** dcillo_td3074265
-- **Auth ID (VS Code):** Not yet configured
+- **SuiteCloud CLI Auth ID:** Not yet configured
 - **Type:** Shared STDDEMO
 - **Primary Use:** General NS demos, not custom dev
 - **SuiteCloud Project:** N/A
@@ -62,8 +75,9 @@
 
 - New accounts get provisioned as TD (Trial Demo) accounts through Oracle internal process
 - Always confirm account type (dedicated vs shared) before starting any SDF or custom field work
-- MCP connector name is set when connecting in Claude — note it here when a new connector is added
-- Multiple connectors can be active in Claude simultaneously — always confirm which one is being used at session start
-- Each account gets its own SuiteCloud project — never share one project folder across multiple TD accounts
+- Record the exact MCP connector name here when a connector is added
+- Multiple connectors can be active simultaneously — always confirm which one is being used at session start
+- A SuiteCloud project may target different TD accounts only when it is intentionally portable and its authentication remains local
+- Codex Projects point to local folders, not GitHub; commit and push regularly so the local clone remains disposable
 
 *Last updated: June 2026*

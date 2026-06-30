@@ -1,14 +1,24 @@
 # NetSuite Dev Toolkit
 ### Personal SuiteScript/SDF Knowledge Base — Christopher Hamilton
 
-This repo is the source of truth for NetSuite SuiteScript and SDF development. Codex, Cline, or any coding agent should read this README before writing any code in a connected project.
+This repo is the source of truth for NetSuite SuiteScript and SDF development. Codex Desktop should read this README before writing any code in a connected project.
 
 **How to use this repo:**
-- Open this repo alongside your active SuiteCloud project in VS Code (two folders in one workspace)
-- Codex reads this README automatically as workspace context
+- Create a Codex Project for the local folder containing the active SuiteCloud project
+- Treat that local folder as a disposable Git clone, not the source of truth: commit and push working changes regularly
+- Codex Projects point to local folders, not directly to GitHub repositories
 - Reusable scripts live in `/scripts`, organized by type
 - Platform knowledge lives in `/docs`
 - Copy `/templates/AGENTS.md` into any new SuiteCloud project root
+
+### Repository Decision Criteria
+
+Ask one question before starting a new project: **Would I copy this customization into a different TD account later?**
+
+- **Yes:** create a standalone repository. Reusable SuiteApps, integration packages, and portable proof-of-concept builds should have an independent history and deployment boundary.
+- **No:** add it to the existing repository that owns the account- or customer-specific solution. Keep one-off scripts beside the customizations they depend on.
+
+Do not create a new repository merely because a script is new. Create one when the customization is a portable unit that may be cloned and deployed independently.
 
 ---
 
@@ -84,25 +94,19 @@ Use for: record creation/updates (`ns_createRecord`, `ns_updateRecord`), diagnos
 - `noninventoryresaleitem` requires `taxSchedule: {"id": "1"}` and `incomeAccount`; omit `subsidiary` field
 - Employee records: cannot be created via MCP, SDF, or CLI — NS UI or CSV import only
 
-### Surface 3 — VS Code + SuiteCloud Extension + Codex/Cline
-Use for: all SuiteScript file creation/editing, all SDF deployments, SuiteCloud project management.
+### Surface 3 — Codex Desktop + Shell + SuiteCloud CLI
+Use for: all SuiteScript file creation/editing, Git operations, SDF validation and deployment, and SuiteCloud project management.
 
 **Deployment Rules:**
-- Always deploy from VS Code integrated terminal — never Mac Terminal (CLI hangs and connection resets)
-- SuiteCloud extension is the primary deployment mechanism, independent of which AI agent wrote the code
-- Codex and Cline are interchangeable coding agents — Codex routes to corporate ChatGPT Enterprise spend; Cline + SuiteCloud Developer Assistant (SDA) is NS-specialized and free
+- Open the local repository folder as a Codex Project; Codex does not attach directly to GitHub
+- Run the SuiteCloud CLI from Codex Desktop's shell in the SuiteCloud project root
+- Treat the local folder as disposable: commit and push after each verified unit of work so it can be recloned without loss
+- Keep authentication local and out of Git; never commit credentials or generated secrets
 - After every deploy, verify actual deployed script ID via SuiteQL before referencing it elsewhere
 
-### Surface 4 — Cline + SuiteCloud Developer Assistant (SDA)
-Oracle's NS-specialized local AI model, runs through Cline only (not Codex).
-- Runs locally, typically on port 8182 (8181 conflicts if another instance is running)
-- **VPN must be OFF** to authenticate — causes "Connection reset" errors otherwise
-- API key regenerates on every service restart — retrieve with:
-  ```
-  curl http://127.0.0.1:[port]/api/internal/devassist/apikey
-  ```
-- Auth ID and Enable must be set in VS Code **Workspace** settings tab, not User tab
-- See `docs/SETUP.md` for full onboarding steps
+### Historical Workflow — VS Code, Cline, and SuiteCloud Developer Assistant
+
+Earlier projects used VS Code with the SuiteCloud extension, sometimes with Cline and Oracle's SuiteCloud Developer Assistant (SDA). This is retained only as historical context for older workspaces. It is not the active setup, build, or deployment workflow. See `docs/SETUP.md` and `docs/GOTCHAS.md` only when maintaining one of those legacy environments.
 
 ---
 
@@ -306,11 +310,9 @@ chore/verify-sdf-deploy
 | `FREEFORMTEXT` on custom record field | Invalid — use `TEXT` |
 | `DECIMAL` on entity custom field | Invalid — use `FLOAT` |
 | Quote/Estimate `selectrecordtype` in SDF | Use `-6` not `"estimate"` |
-| Mac Terminal for SDF deploy | Hangs and connection resets — use VS Code integrated terminal |
-| SDA auth with VPN on | Connection reset — VPN must be OFF |
-| SDA API key | Regenerates on service restart — retrieve via curl |
-| SDA settings location | Must be set in Workspace tab, not User tab |
-| Codex + SDA | Not compatible — SDA only works through Cline |
+| Codex Project source | Points to a local folder, not directly to GitHub |
+| Local project folder | Treat as a disposable clone; commit and push verified work regularly |
+| SuiteCloud deploy surface | Run the SuiteCloud CLI from the Codex Desktop shell |
 
 See `docs/GOTCHAS.md` for the full, continuously updated log.
 
