@@ -71,6 +71,8 @@ docs: update TD account index
 
 Christopher works across multiple NetSuite TD (Trial/Demo) accounts. No sandbox exists — TD accounts are the dev environment. See `docs/TD-ACCOUNTS.md` for the current account index.
 
+`docs/DEMO-DATASET-TD3102894.md` — structured reference for the TD3102894 demo dataset (item/customer/lineage facts).
+
 | Tier | Notes |
 |------|-------|
 | **Dedicated TD** | Full SDF and custom field support |
