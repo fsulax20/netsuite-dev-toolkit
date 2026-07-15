@@ -23,6 +23,17 @@
 - **NetSuite MCP connector** — configured in Codex but not always callable per-thread. Confirm it's active before relying on it. Use Claude.ai for MCP-heavy work.
 - **Oracle SuiteCloud Agent Skills** — installed globally at `~/.agents/skills/`. These cover NS domain knowledge. Reference them explicitly when relevant: `$netsuite-suitescript-records-reference`, `$netsuite-sdf-project-documentation`, `$netsuite-owasp-secure-coding`, `$netsuite-sdf-roles-and-permissions`, `$netsuite-ai-connector-instructions`.
 
+### MCP Custom Tools & Apps
+
+MCP is the authenticated connection layer; **custom tools** are separately deployed SuiteScript 2.1 capabilities that an AI client can invoke through that connection. They are not edits to the managed MCP Standard Tools SuiteApp.
+
+- **Current TD state:** `Customization > Scripting > Custom Tools` contains only the managed MCP Standard Tools toolsets: Record, Reporting, Search, SuiteQL, and Prompt Library App.
+- **Custom-tool structure:** an SDF project provides a custom tool script, a JSON tool schema, and a `toolset` XML definition. Set `exposetoaiconnector` to expose the tool; the toolset's permissions control visibility, while the connected NetSuite role controls the underlying data and actions.
+- **MCP Apps:** custom tools can bundle a self-contained HTML interface that compatible AI clients render in chat. Use this only when a structured form, selector, or review step materially improves a workflow.
+- **Starting point:** Oracle's [MCP-Sample-Tools](https://github.com/oracle-samples/netsuite-suitecloud-samples/tree/main/MCP-Sample-Tools) includes 2026.1-compatible sample toolsets and a minimal MCP App. Clone it into a standalone repo when a real use case is approved; do not deploy samples to a TD account merely for exploration.
+- **Connection endpoint:** a deployed SuiteApp's custom tools are available at `https://<accountid>.suitetalk.api.netsuite.com/services/mcp/v1/suiteapp/<applicationid>`. The AI client must use OAuth 2.0 Authorization Code with PKCE, not a static bearer token.
+- **First production pattern:** create one narrow tool with explicit inputs, role-scoped permissions, input validation, clear logging, and a confirmation/review step before any write action (for example, creating a marketing campaign).
+
 ### Project Setup
 - Every project is a GitHub repo cloned into `~/Projects/[repo-name]`
 - Each project repo has an `AGENTS.md` at root (copy from `templates/AGENTS.md`)
