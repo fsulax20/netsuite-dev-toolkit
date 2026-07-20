@@ -25,6 +25,7 @@ Work from this repository's root in Visual Studio Code with the Codex IDE extens
 
 - Read the toolkit README before writing code.
 - Confirm `manifest.xml` exists before running SuiteCloud CLI commands.
+- Before using the NetSuite MCP connector, confirm the intended TD account, role, and callable tools for the current task.
 - Never hardcode account IDs or credentials.
 - Commit and push after every meaningful change.
 - Verify the script ID via SuiteQL after every deploy.

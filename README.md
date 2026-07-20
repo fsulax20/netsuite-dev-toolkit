@@ -21,12 +21,12 @@
 - **Visual Studio Code + Codex IDE extension** — primary build surface for local project work, file review, and implementation. Use the integrated terminal for SuiteCloud CLI at `/usr/local/bin/suitecloud` v3.1.3.
 - **ChatGPT desktop app** — use for learning, planning, documentation review, and visual prototypes; do not treat its project sources as a substitute for the local repository workspace.
 - **GitHub** — source of truth for all repos. Local folders are disposable clones. Commit and push after every meaningful change.
-- **NetSuite MCP connector** — configured in Codex but not always callable per-thread. Confirm it's active before relying on it. Use Claude.ai for MCP-heavy work.
+- **NetSuite MCP connector** — connected through the ChatGPT desktop app. Use it for account-aware discovery and approved NetSuite actions; confirm the intended TD account, role, and callable tools at the start of each task before relying on it.
 - **Oracle SuiteCloud Agent Skills** — the installed local skill library is `~/.agents/skills/`. Current verified NetSuite skills: `$netsuite-suitescript-records-reference`, `$netsuite-sdf-project-documentation`, `$netsuite-owasp-secure-coding`, `$netsuite-sdf-roles-and-permissions`, and `$netsuite-ai-connector-instructions`. The upstream catalogue is `oracle/netsuite-suitecloud-sdk`; install additional skills only for a concrete need and record the change here.
 
 ### MCP Custom Tools & Apps
 
-MCP is the authenticated connection layer; **custom tools** are separately deployed SuiteScript 2.1 capabilities that an AI client can invoke through that connection. They are not edits to the managed MCP Standard Tools SuiteApp.
+MCP is the authenticated connection layer; the current NetSuite connector is accessed through the ChatGPT desktop app. **Custom tools** are separately deployed SuiteScript 2.1 capabilities that an AI client can invoke through that connection. They are not edits to the managed MCP Standard Tools SuiteApp.
 
 - **Current TD state:** `Customization > Scripting > Custom Tools` contains only the managed MCP Standard Tools toolsets: Record, Reporting, Search, SuiteQL, and Prompt Library App.
 - **Custom-tool structure:** an SDF project provides a custom tool script, a JSON tool schema, and a `toolset` XML definition. Set `exposetoaiconnector` to expose the tool; the toolset's permissions control visibility, while the connected NetSuite role controls the underlying data and actions.

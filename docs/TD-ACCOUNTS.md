@@ -92,5 +92,6 @@
 - Multiple connectors can be active simultaneously — always confirm which one is being used at session start
 - A SuiteCloud project may target different TD accounts only when it is intentionally portable and its authentication remains local
 - Codex Projects point to local folders, not GitHub; commit and push regularly so the local clone remains disposable
+- The NetSuite MCP connector is accessed through the ChatGPT desktop app. Confirm the account, role, and callable tools before relying on it in a task.
 
-*Last updated: June 2026*
+*Last updated: July 2026*
