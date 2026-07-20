@@ -21,7 +21,7 @@
 - **Codex Desktop** — primary build surface, shell access, SuiteCloud CLI at `/usr/local/bin/suitecloud` v3.1.3
 - **GitHub** — source of truth for all repos. Local folders are disposable clones. Commit and push after every meaningful change.
 - **NetSuite MCP connector** — configured in Codex but not always callable per-thread. Confirm it's active before relying on it. Use Claude.ai for MCP-heavy work.
-- **Oracle SuiteCloud Agent Skills** — installed globally at `~/.agents/skills/`. These cover NS domain knowledge. Reference them explicitly when relevant: `$netsuite-suitescript-records-reference`, `$netsuite-sdf-project-documentation`, `$netsuite-owasp-secure-coding`, `$netsuite-sdf-roles-and-permissions`, `$netsuite-ai-connector-instructions`.
+- **Oracle SuiteCloud Agent Skills** — the installed local skill library is `~/.agents/skills/`. Current verified NetSuite skills: `$netsuite-suitescript-records-reference`, `$netsuite-sdf-project-documentation`, `$netsuite-owasp-secure-coding`, `$netsuite-sdf-roles-and-permissions`, and `$netsuite-ai-connector-instructions`. The upstream catalogue is `oracle/netsuite-suitecloud-sdk`; install additional skills only for a concrete need and record the change here.
 
 ### MCP Custom Tools & Apps
 
@@ -35,9 +35,11 @@ MCP is the authenticated connection layer; **custom tools** are separately deplo
 - **First production pattern:** create one narrow tool with explicit inputs, role-scoped permissions, input validation, clear logging, and a confirmation/review step before any write action (for example, creating a marketing campaign).
 
 ### Project Setup
-- Every project is a GitHub repo cloned into `~/Projects/[repo-name]`
-- Each project repo has an `AGENTS.md` at root (copy from `templates/AGENTS.md`)
-- Point a Codex Project at the cloned folder using "Use an existing folder"
+- Delivery projects are GitHub repos cloned into `~/Projects/[repo-name]`.
+- Each delivery project has an `AGENTS.md` at its Git root (copy from `templates/AGENTS.md`).
+- Training exercises may stay local and disposable; do not create a GitHub repo unless the exercise will become reusable demo or product work.
+- For SuiteCloud CLI for Node.js projects, open Codex and run SuiteCloud CLI from the project root containing `suitecloud.config.js`. The SDF source folder is normally `src/`, which contains `manifest.xml`, `deploy.xml`, and `project.json`.
+- Point a Codex Project at the project root, not the nested `src/` folder.
 - This toolkit repo lives at `~/Projects/netsuite-dev-toolkit` — reference it from any project
 
 ### New Repo vs Existing
@@ -64,6 +66,15 @@ feat: add lead ingestion restlet
 fix: resolve script ID mangling on deploy
 chore: verify deployed script IDs via suiteql
 docs: update TD account index
+
+### Documentation Maintenance
+- **Personal Codex behavior:** `~/.codex/AGENTS.md`
+- **Operating model and toolchain facts:** this `README.md`
+- **Project-specific rules:** the project's root `AGENTS.md`
+- **TD account and demo-data facts:** `docs/TD-ACCOUNTS.md` and the relevant dataset document
+- **Available NetSuite skills:** `~/.agents/skills/`; upstream source: `oracle/netsuite-suitecloud-sdk`
+
+Run a read-only setup and documentation audit when a training lesson conflicts with verified behavior, before a major demo or deployment, after changing a tool or skill, and at least quarterly. Update this toolkit only after verifying the change from the installed tool, local configuration, or an authoritative source.
 
 ---
 
