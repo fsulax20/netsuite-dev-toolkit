@@ -111,7 +111,7 @@ Things Oracle's skills don't know about — discovered through actual builds:
 | `DECIMAL` on entity custom field | Invalid — use `FLOAT` |
 | Quote `selectrecordtype` in SDF XML | Use `-6` not `"estimate"` |
 | Codex MCP connector | May be configured but not callable per-thread — confirm each session |
-| SuiteCloud commands not activating | Must be run from folder containing `manifest.xml` at root |
+| SuiteCloud commands not activating | Run from the project root containing `suitecloud.config.js`; the SDF source lives in `src/` |
 
 **SuiteQL diagnostic for deployed script IDs:**
 ```sql
@@ -129,7 +129,7 @@ New tools and features Christopher has discovered. Codex: when you see a task ty
 
 ### Adopt — actively using
 - Oracle SuiteCloud Agent Skills (installed globally via `npx skills`)
-- NetSuite MCP connector (Claude.ai and Codex)
+- NetSuite MCP connector through the ChatGPT desktop app (and Claude.ai where separately configured)
 - SuiteCloud CLI v3.1.3 via Codex shell
 
 ### Evaluate — discovered, worth trying

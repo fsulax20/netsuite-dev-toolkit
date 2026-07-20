@@ -20,12 +20,14 @@ Work from this repository's root in Visual Studio Code with the Codex IDE extens
 - `$netsuite-owasp-secure-coding` — Apply OWASP security patterns to SuiteScript and JavaScript.
 - `$netsuite-sdf-roles-and-permissions` — Validate SDF permissions and least-privilege role configurations.
 - `$netsuite-ai-connector-instructions` — Apply the correct NetSuite connector tool order, output rules, and SuiteQL safeguards.
+- If this project targets TD3102894, read `~/Projects/netsuite-dev-toolkit/docs/DEMO-DATASET-TD3102894.md` before creating test data, sample records, or demo scenarios.
 
 # RULES
 
 - Read the toolkit README before writing code.
 - Confirm `manifest.xml` exists before running SuiteCloud CLI commands.
 - Before using the NetSuite MCP connector, confirm the intended TD account, role, and callable tools for the current task.
+- When targeting TD3102894, use its existing showcase items and customers instead of inventing demo data.
 - Never hardcode account IDs or credentials.
 - Commit and push after every meaningful change.
 - Verify the script ID via SuiteQL after every deploy.

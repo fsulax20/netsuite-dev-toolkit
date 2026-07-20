@@ -60,14 +60,14 @@
 
 ### TD3102894
 - **MCP Connector:** chamilton_td3102894
-- **SuiteCloud CLI Auth ID:** Not yet documented
+- **SuiteCloud CLI Auth ID:** td3102894-admin
 - **Type:** Dedicated
 - **Primary Use:** Consumer Goods (new)
 - **SuiteCloud Project:** `lead-ingestion-queue`
 - **Key Customizations:** None documented
 - **Restrictions:** Do not assume retail-specific saved searches exist. The saved-search inventory is dominated by WMS/Manufacturing-prefixed searches, including WMS Open Task, Mfg Mobile, Cycle Count, and Pick Task. The account was likely provisioned from the same bundle/template as TD3092021 (Stairway Manufacturing); verify the actual data model before building Lead Triage Console logic.
 - **Status:** Active
-- **Notes:** MCP connector is confirmed live and callable: `ns_listSavedSearches` returned real data. Connected through Claude.ai, not ChatGPT Work; the two tools currently require separate connector setups even for the same NetSuite account.
+- **Notes:** SuiteCloud CLI authentication was verified in the `final-assessment` training project on July 20, 2026. The NetSuite connector is configured through the ChatGPT desktop app; confirm the current account, role, and callable tools at the start of each task.
 
 ---
 
