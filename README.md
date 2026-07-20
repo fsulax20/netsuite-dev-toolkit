@@ -18,7 +18,8 @@
 ## HOW WE WORK WITH CODEX
 
 ### Toolchain
-- **Codex Desktop** — primary build surface, shell access, SuiteCloud CLI at `/usr/local/bin/suitecloud` v3.1.3
+- **Visual Studio Code + Codex IDE extension** — primary build surface for local project work, file review, and implementation. Use the integrated terminal for SuiteCloud CLI at `/usr/local/bin/suitecloud` v3.1.3.
+- **ChatGPT desktop app** — use for learning, planning, documentation review, and visual prototypes; do not treat its project sources as a substitute for the local repository workspace.
 - **GitHub** — source of truth for all repos. Local folders are disposable clones. Commit and push after every meaningful change.
 - **NetSuite MCP connector** — configured in Codex but not always callable per-thread. Confirm it's active before relying on it. Use Claude.ai for MCP-heavy work.
 - **Oracle SuiteCloud Agent Skills** — the installed local skill library is `~/.agents/skills/`. Current verified NetSuite skills: `$netsuite-suitescript-records-reference`, `$netsuite-sdf-project-documentation`, `$netsuite-owasp-secure-coding`, `$netsuite-sdf-roles-and-permissions`, and `$netsuite-ai-connector-instructions`. The upstream catalogue is `oracle/netsuite-suitecloud-sdk`; install additional skills only for a concrete need and record the change here.
@@ -39,7 +40,7 @@ MCP is the authenticated connection layer; **custom tools** are separately deplo
 - Each delivery project has an `AGENTS.md` at its Git root (copy from `templates/AGENTS.md`).
 - Training exercises may stay local and disposable; do not create a GitHub repo unless the exercise will become reusable demo or product work.
 - For SuiteCloud CLI for Node.js projects, open Codex and run SuiteCloud CLI from the project root containing `suitecloud.config.js`. The SDF source folder is normally `src/`, which contains `manifest.xml`, `deploy.xml`, and `project.json`.
-- Point a Codex Project at the project root, not the nested `src/` folder.
+- Open the project root in Visual Studio Code and use Codex from the IDE, not the nested `src/` folder.
 - This toolkit repo lives at `~/Projects/netsuite-dev-toolkit` — reference it from any project
 
 ### New Repo vs Existing

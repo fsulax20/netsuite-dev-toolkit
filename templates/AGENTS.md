@@ -13,6 +13,8 @@
 
 Read `~/Projects/netsuite-dev-toolkit/README.md` for the working model, environment rules, and platform gotchas.
 
+Work from this repository's root in Visual Studio Code with the Codex IDE extension. Run SuiteCloud CLI commands from the project root containing `suitecloud.config.js`, not from `src/`.
+
 - `$netsuite-suitescript-records-reference` — Verify SuiteScript record types, field IDs, field types, and search support.
 - `$netsuite-sdf-project-documentation` — Generate and maintain documentation for SuiteCloud projects.
 - `$netsuite-owasp-secure-coding` — Apply OWASP security patterns to SuiteScript and JavaScript.

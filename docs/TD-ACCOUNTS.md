@@ -54,7 +54,7 @@
 - **Key Customizations:** Lead ingestion queue project
 - **Restrictions:** None known
 - **Status:** Active
-- **Notes:** Primary build surface is Codex Desktop with shell access and the SuiteCloud CLI.
+- **Notes:** Primary build surface is Visual Studio Code with the Codex IDE extension and the integrated-terminal SuiteCloud CLI.
 
 ---
 
